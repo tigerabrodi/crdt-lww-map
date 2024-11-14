@@ -57,11 +57,20 @@ export class LWWMap<ValueType> {
   }
 
   has(key: string) {
-    return this.#data.get(key)?.value !== null
+    const value = this.#data.get(key)
+    if (value === undefined) return false
+
+    return value.value !== null
   }
 
   get(key: string) {
-    return this.#data.get(key)?.value
+    const register = this.#data.get(key)
+
+    if (!register) return undefined
+
+    if (!register.value) return undefined
+
+    return register.value
   }
 
   set(key: string, value: ValueType) {
